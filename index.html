@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Master.EV | Electric Scooter Showroom</title>
+<meta name="description" content="Master.EV electric scooter showroom. Explore the full Zelio range, compare prices and range, and book a free test ride.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 168'%3E%3Crect width='168' height='168' rx='38' fill='%23c6ff00'/%3E%3Cpath d='M38 124V46h28l18 40 18-40h28v78' fill='none' stroke='%230b0b0b' stroke-width='13' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#eff0f7; --ink:#0b0b0b; --muted:#585a66; --line:rgba(11,11,11,.12);
+  --pill:#e1e2ec; --white:#ffffff; --dark:#0e0f13;
+  --blue:#2e3bff; --lime:#c6ff00;
+  --font:'Space Grotesk',system-ui,sans-serif;
+  --gut:clamp(16px,4.5vw,64px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{padding-inline:var(--gut)}
+.caps{font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.5}
+
+/* ---------- Intro (unchanged look) ---------- */
+#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#0b0b0b;color:#f5f5f5}
+#intro .curtain{position:absolute;left:0;right:0;height:50%;background:#0b0b0b}
+#intro .curtain.top{top:0}#intro .curtain.bot{bottom:0}
+#intro .logo{position:relative;z-index:2;text-align:center}
+#intro .word{font-family:var(--font);font-weight:700;font-size:clamp(3rem,10vw,7rem);letter-spacing:-.03em;display:flex;justify-content:center;overflow:hidden}
+#intro .word span{display:inline-block;transform:translateY(110%)}
+#intro .word .dot{color:#c6ff00;text-shadow:0 0 30px #c6ff00}
+#intro .mark{width:clamp(90px,14vw,140px);height:auto;margin:0 auto 1.4rem;display:block}
+#intro .mark .m{stroke-dasharray:320;stroke-dashoffset:320}
+#intro .mark .b{opacity:0;filter:drop-shadow(0 0 12px #c6ff00)}
+#intro .battery{width:min(320px,70vw);height:3px;margin:2rem auto 1rem;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+#intro .battery i{display:block;height:100%;width:0;background:linear-gradient(90deg,#c6ff00,#00e5ff,#ff2e88);box-shadow:0 0 18px #00e5ff}
+#intro .pct{font-size:.75rem;letter-spacing:.4em;color:#9a9a9a}
+#intro .bolt{position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 50% 50%,rgba(0,229,255,.35),transparent 60%);opacity:0}
+
+/* ---------- Header ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:40;padding:28px var(--gut);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;pointer-events:none}
+header>*{pointer-events:auto}
+header .brand,header .statement{transition:color .4s}
+header.over .brand,header.over .statement{color:#fff}
+header.over .brand b{color:var(--lime)}
+header.over .pill.light{background:rgba(255,255,255,.16);color:#fff;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.45rem;letter-spacing:-.03em}
+.brand svg{width:36px;height:36px;flex:none}
+.brand b{color:var(--blue)}
+.statement{flex:1;max-width:30rem;font-size:1.05rem;line-height:1.35;color:var(--ink)}
+.pills{display:flex;gap:.6rem}
+.pill{display:inline-flex;align-items:center;gap:.7rem;height:46px;padding:0 1.3rem;border-radius:999px;font-size:.82rem;font-weight:500;letter-spacing:.03em;text-transform:uppercase;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s,color .3s;white-space:nowrap}
+.pill:hover{transform:scale(1.05)}
+.pill.dark{background:#20222b;color:#fff}
+.pill.light{background:var(--pill);color:var(--ink)}
+.pill.white{background:#fff;color:var(--ink);box-shadow:0 6px 24px -10px rgba(14,15,19,.25)}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.dark .dot{background:var(--lime)}
+.pill .dots{display:inline-flex;gap:3px}.pill .dots i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.statement{transition:opacity .4s,transform .4s}
+header.scrolled .statement{opacity:0;transform:translateY(-10px);pointer-events:none}
+@media (max-width:900px){.statement{display:none}}
+@media (max-width:560px){.pill.dark{display:none}header{padding-top:18px}}
+
+/* ---------- Menu panel ---------- */
+.menu-veil{position:fixed;inset:0;z-index:60;background:rgba(14,15,19,.25);opacity:0;pointer-events:none;transition:opacity .5s}
+.menu{position:fixed;top:12px;right:12px;bottom:12px;z-index:61;width:min(440px,calc(100% - 24px));background:#fff;border-radius:22px;padding:28px 32px;display:flex;flex-direction:column;transform:translateX(110%);transition:transform .7s cubic-bezier(.7,0,.2,1)}
+body.menu-open .menu{transform:none}
+body.menu-open .menu-veil{opacity:1;pointer-events:auto}
+.menu .top{display:flex;justify-content:flex-end}
+.menu nav{display:flex;flex-direction:column;gap:.3rem;margin-top:2.5rem}
+.menu nav a{font-size:clamp(2rem,6vw,2.8rem);font-weight:500;letter-spacing:-.03em;display:flex;align-items:center;gap:.8rem;transition:color .3s,transform .3s}
+.menu nav a::before{content:"";width:0;height:12px;border-radius:50%;background:var(--blue);transition:width .3s}
+.menu nav a:hover{color:var(--blue);transform:translateX(6px)}
+.menu nav a:hover::before{width:12px}
+.menu .foot{margin-top:auto;display:grid;gap:.4rem;color:var(--muted);font-size:.9rem}
+
+/* ---------- Hero ---------- */
+.hero{padding:0}
+.stage{position:relative;height:100svh;min-height:520px;border-radius:0;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#1b1d27,#0b0c10 70%);will-change:transform}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage .fallback{position:absolute;inset:0;display:none;place-items:center}
+.stage .fallback img{width:min(60%,520px)}
+.stage.no-gl .fallback{display:grid}
+.stage .cap{position:absolute;left:28px;bottom:26px;color:#e9e9ef;max-width:22rem;font-size:1rem;line-height:1.45;pointer-events:none}
+.stage .cap b{color:var(--lime);font-weight:500}
+.stage .go{position:absolute;right:24px;bottom:22px}
+.stage .go .pill{background:var(--lime);color:#0b0b0b}
+.plusrow{display:flex;justify-content:space-between;align-items:center;padding:14px 0 0;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
+.plusrow i{font-style:normal;font-size:1.3rem;line-height:1;font-weight:300}
+@media (max-width:640px){.plusrow i:nth-child(2),.plusrow i:nth-child(4){display:none}.stage .cap{font-size:.9rem;left:18px;bottom:76px}.stage .go{left:18px;right:auto;bottom:18px}}
+
+/* ---------- Video hero (Lamborghini-style) ---------- */
+.stage{container-type:size;background:#000}
+.vid{position:absolute;inset:0;overflow:hidden;background:#000 center/cover no-repeat}
+.vid iframe{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.2s}
+.vid iframe.on{opacity:1}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,0) 45%,rgba(0,0,0,.8) 100%)}
+.hero-copy{position:absolute;left:clamp(20px,3.5vw,48px);right:clamp(20px,3.5vw,48px);bottom:clamp(84px,13cqh,130px);color:#fff}
+.hero-eye{color:var(--lime)}
+.hero-name{font-weight:700;letter-spacing:-.05em;line-height:.88;text-transform:uppercase;font-size:clamp(3.4rem,11vw,10rem);overflow:hidden;margin:.35rem 0 .7rem}
+.hero-name span{display:inline-block}
+.hero-sub{font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.45;max-width:30rem;color:#e6e6ec}
+.hero-ctas{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.5rem}
+.pill.lime{background:var(--lime);color:#0b0b0b}
+.pill.lime .dot{background:#0b0b0b}
+.pill.glass{background:rgba(255,255,255,.14);color:#fff;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.pill.glass:hover{background:rgba(255,255,255,.24)}
+.pp{position:absolute;bottom:16px;right:clamp(20px,3.5vw,48px);height:40px;font-size:.72rem}
+.tabs{position:absolute;left:clamp(20px,3.5vw,48px);right:calc(clamp(20px,3.5vw,48px) + 110px);bottom:22px;display:flex;gap:clamp(.8rem,2vw,1.6rem)}
+.tab{flex:1;max-width:260px;text-align:left;color:rgba(255,255,255,.55);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;padding:12px 0 4px;position:relative;transition:color .3s}
+.tab::before,.tab i{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:rgba(255,255,255,.25)}
+.tab i{background:var(--lime);transform:scaleX(0);transform-origin:left}
+.tab.on,.tab:hover{color:#fff}
+.tab b{font-weight:500;margin-right:.6rem;opacity:.7}
+
+/* ---------- Ribbon zone ---------- */
+.ribbon-zone{position:relative}
+.ribbon{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+.ribbon path{fill:none;stroke:var(--blue);stroke-width:30;stroke-linecap:round}
+.ribbon-zone>section{position:relative;z-index:1}
+
+/* ---------- About ---------- */
+.about{padding-block:clamp(6rem,14vw,12rem) clamp(4rem,8vw,7rem)}
+.big{font-weight:500;letter-spacing:-.045em;line-height:.98;font-size:clamp(3.2rem,10.5vw,10rem)}
+.big .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.big .ln>span{display:inline-block}
+.about .big .ln:first-child{padding-left:15%}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);margin-top:clamp(3rem,7vw,6rem);align-items:start}
+.duo{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:var(--blue)}
+.duo img{position:absolute;inset:0;margin:auto;height:86%;width:auto;mix-blend-mode:luminosity;opacity:0;transition:opacity .8s}
+.duo img.on{opacity:1}
+.duo::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.25),transparent 50%)}
+.about p{font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.5;max-width:34rem}
+.about .pill{margin-top:2.4rem}
+@media (max-width:820px){.about-grid{grid-template-columns:1fr}.about .big .ln:first-child{padding-left:0}}
+
+/* ---------- Test ride warp ---------- */
+.ride{padding-block:2rem clamp(5rem,10vw,9rem);perspective:1400px}
+.ride-card{position:relative;display:block;height:min(78vh,720px);border-radius:22px;overflow:hidden;background:#0e0f13;transform-origin:50% 100%;will-change:transform}
+.ride-track{position:absolute;top:50%;left:0;display:flex;gap:4vw;transform:translateY(-50%);will-change:transform}
+.ride-track img{height:min(46vh,420px);width:auto;flex:none;opacity:.9}
+.ride-card::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 50%,rgba(14,15,19,.15),rgba(14,15,19,.75) 75%)}
+.ride-word{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(1rem,3vw,2.5rem);color:#fff;font-weight:500;letter-spacing:-.04em;font-size:clamp(3rem,11vw,9.5rem);pointer-events:none}
+.ride-btn{display:grid;place-items:center;width:clamp(90px,13vw,170px);height:clamp(60px,8vw,104px);border-radius:999px;background:var(--lime);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.ride-card:hover .ride-btn{transform:scale(1.12)}
+.ride-btn svg{width:34%;height:auto}
+.ride .plusrow{padding-top:16px}
+
+/* ---------- Collection ---------- */
+.collection{padding-block:clamp(4rem,8vw,7rem)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
+.head .caps{max-width:22rem;padding-bottom:1rem}
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;margin:2.6rem 0 2.4rem}
+.filters .pill{height:42px;font-size:.76rem}
+.filters .pill.on{background:#20222b;color:#fff}
+.sort{height:42px;padding:0 1.1rem;border-radius:999px;border:0;background:var(--pill);font:inherit;font-size:.76rem;text-transform:uppercase;letter-spacing:.03em;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.5rem,3vw,2.6rem) clamp(1rem,2.4vw,2rem)}
+.card{display:block;text-align:left;width:100%;cursor:pointer}
+.card .media{position:relative;aspect-ratio:16/11;border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 60%,#232634,#0e0f13 72%);transition:border-radius .5s}
+.card .media::before{content:"";position:absolute;width:55%;aspect-ratio:1;left:50%;top:55%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(46,59,255,.55),transparent 65%);filter:blur(10px);transition:transform .6s}
+.card .media img{position:absolute;inset:0;margin:auto;height:82%;width:auto;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.card:hover .media{border-radius:44px}
+.card:hover .media img{transform:scale(1.08) rotate(-2deg)}
+.card:hover .media::before{transform:translate(-50%,-50%) scale(1.25)}
+.card .tags{margin-top:1rem}
+.card h3{font-weight:500;letter-spacing:-.035em;font-size:clamp(1.8rem,3.4vw,3rem);line-height:1.05;margin-top:.2rem}
+.note{margin-top:2.4rem;color:var(--muted);font-size:.85rem;max-width:44rem}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+
+/* ---------- Savings ---------- */
+.savings{padding-block:clamp(4rem,8vw,7rem)}
+.calc{margin-top:3rem;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);background:#fff;border-radius:22px;padding:clamp(1.5rem,4vw,3.5rem)}
+.calc label{display:flex;justify-content:space-between;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;margin:1.5rem 0 .8rem}
+.calc label:first-child{margin-top:0}
+.calc output{font-weight:500}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--line);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#20222b;border:4px solid var(--lime);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#20222b;border:4px solid var(--lime);cursor:pointer}
+input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--blue);outline-offset:3px}
+.save{display:flex;flex-direction:column;justify-content:center}
+.save .num{font-weight:500;letter-spacing:-.05em;font-size:clamp(3.4rem,8vw,7rem);line-height:1;margin:.6rem 0 1rem}
+.save small{color:var(--muted);font-size:.92rem;line-height:1.55;max-width:26rem}
+@media (max-width:820px){.calc{grid-template-columns:1fr}}
+
+/* ---------- Statement ---------- */
+.statement-big{padding-block:clamp(5rem,12vw,11rem);text-align:center}
+.statement-big .big{font-size:clamp(3rem,9.5vw,9rem)}
+.statement-big .w{opacity:.12;display:inline-block}
+.statement-big .cta{margin-top:3.5rem;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+.statement-big .cta p{font-size:clamp(1.2rem,2vw,1.6rem);font-weight:500}
+
+/* ---------- Visit ---------- */
+.visit{padding-block:0 clamp(4rem,8vw,7rem)}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);margin-top:3rem}
+.info{display:grid;gap:0}
+.info div{border-top:1px solid var(--line);padding:1.2rem 0}
+.info p{font-size:1.3rem;margin-top:.4rem;letter-spacing:-.01em}
+.map-wrap{position:relative;border-top:0!important;padding:0!important;margin-top:.6rem}
+.map-wrap iframe{display:block;width:100%;height:clamp(240px,32vw,340px);border:0;border-radius:20px;filter:grayscale(.2)}
+.map-wrap .pill{position:absolute;left:14px;bottom:14px}
+form.book{background:#fff;border-radius:22px;padding:clamp(1.5rem,3vw,2.4rem);display:grid;gap:1.1rem}
+.field{display:grid;gap:.45rem}
+.field label{font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.field input,.field select{height:52px;border-radius:14px;border:1px solid var(--line);background:var(--bg);padding:0 1rem;font:inherit;font-size:1rem;color:var(--ink);outline:none;transition:border-color .3s}
+.field input:focus,.field select:focus{border-color:var(--blue)}
+form.book .pill{justify-content:center;height:54px;margin-top:.4rem}
+@media (max-width:820px){.visit-grid{grid-template-columns:1fr}}
+
+/* ---------- Footer ---------- */
+footer{padding-block:0 2rem}
+.foot-logo{font-weight:700;letter-spacing:-.06em;font-size:clamp(4.5rem,19vw,18rem);line-height:.85;display:flex;align-items:center;gap:.06em;overflow:hidden}
+.foot-logo b{color:var(--blue)}
+.foot-row{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:1.2rem;margin-top:2rem;color:var(--muted);font-size:.82rem}
+
+/* ---------- Modal ---------- */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(14,15,19,.35);opacity:0;pointer-events:none;transition:opacity .4s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal .panel{position:relative;width:min(960px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;display:grid;grid-template-columns:1.1fr 1fr;transform:translateY(30px) scale(.97);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.modal.open .panel{transform:none}
+.modal .pic{background:radial-gradient(circle at 50% 60%,#232634,#0e0f13 72%);display:grid;place-items:center;min-height:340px;border-radius:24px 0 0 24px}
+.modal .pic img{max-height:380px;width:auto}
+.modal .body{padding:2.2rem}
+.modal h3{font-weight:500;letter-spacing:-.04em;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1;margin:.6rem 0 1.6rem}
+.modal .specs{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1.6rem}
+.modal .specs div{background:var(--bg);border-radius:14px;padding:1rem}
+.modal .specs b{display:block;font-size:1.15rem;font-weight:500;margin-top:.3rem}
+.modal .x{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;background:var(--pill);display:grid;place-items:center;font-size:1.4rem}
+.modal .body .pill{width:100%;justify-content:center;height:54px}
+@media (max-width:760px){.modal .panel{grid-template-columns:1fr}.modal .pic{border-radius:24px 24px 0 0;min-height:240px}.modal .pic img{max-height:240px}}
+
+.rv{opacity:0;transform:translateY(40px)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}.rv{opacity:1;transform:none}.statement-big .w{opacity:1}}
+</style>
+</head>
+<body class="locked">
+
+<!-- Intro: kept exactly as before -->
+<div id="intro" aria-hidden="true">
+  <div class="curtain top"></div><div class="curtain bot"></div>
+  <div class="bolt"></div>
+  <div class="logo">
+    <svg class="mark" viewBox="0 0 168 168" aria-hidden="true">
+      <rect x="4" y="4" width="160" height="160" rx="36" fill="#141414" stroke="#c6ff00" stroke-width="3"/>
+      <path class="m" d="M38 124 V46 L66 46 L84 86 L102 46 L130 46 V124" fill="none" stroke="#f5f5f5" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+      <path class="b" d="M92 52 L70 94 H86 L76 130 L106 82 H90 L100 52 Z" fill="#c6ff00"/>
+    </svg>
+    <div class="word"><span>M</span><span>A</span><span>S</span><span>T</span><span>E</span><span>R</span><span class="dot">.</span><span>E</span><span>V</span></div>
+    <div class="battery"><i></i></div>
+    <div class="pct"><span id="pct">0</span>% CHARGED</div>
+  </div>
+</div>
+
+<header id="hdr" class="over">
+  <a href="#top" class="brand" aria-label="Master.EV home">
+    <svg viewBox="0 0 168 168" aria-hidden="true"><rect x="4" y="4" width="160" height="160" rx="36" fill="#141414" stroke="#c6ff00" stroke-width="5"/><path d="M38 124 V46 L66 46 L84 86 L102 46 L130 46 V124" fill="none" stroke="#f5f5f5" stroke-width="13" stroke-linejoin="round" stroke-linecap="round"/><path d="M92 52 L70 94 H86 L76 130 L106 82 H90 L100 52 Z" fill="#c6ff00"/></svg>
+    <span>Master<b>.</b>EV</span>
+  </a>
+  <p class="statement">An electric scooter showroom bringing you the complete Zelio range, ready to see, sit on and ride.</p>
+  <div class="pills">
+    <a href="#visit" class="pill dark" data-scroll>Book a ride <span class="dot"></span></a>
+    <button class="pill light" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu <span class="dots"><i></i><i></i></span></button>
+  </div>
+</header>
+
+<div class="menu-veil" id="veil"></div>
+<aside class="menu" id="menu" aria-label="Site menu">
+  <div class="top"><button class="pill light" id="menuClose">Close <span class="dots"><i></i></span></button></div>
+  <nav>
+    <a href="#top" data-scroll>Home</a>
+    <a href="#about" data-scroll>Showroom</a>
+    <a href="#collection" data-scroll>Collection</a>
+    <a href="#savings" data-scroll>Savings</a>
+    <a href="#visit" data-scroll>Test ride</a>
+  </nav>
+  <div class="foot"><span id="mPhone"></span><span id="mAddr"></span></div>
+</aside>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="stage" id="stage">
+      <div class="vid" id="vid"></div>
+      <div class="shade" aria-hidden="true"></div>
+      <button class="pill glass pp" id="pp" aria-label="Pause video">Pause</button>
+      <div class="hero-copy">
+        <span class="caps hero-eye" id="hEye"></span>
+        <h1 class="hero-name"><span id="hName"></span></h1>
+        <p class="hero-sub" id="hSub"></p>
+        <div class="hero-ctas">
+          <button class="pill lime" id="hMore">Discover <span class="dot"></span></button>
+          <a href="#visit" class="pill glass" data-scroll>Book a test ride</a>
+        </div>
+      </div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Featured scooters"></div>
+    </div>
+    <div class="plusrow wrap" aria-hidden="true"><i>+</i><i>+</i><span>Scroll to explore</span><i>+</i><i>+</i></div>
+  </section>
+
+  <div class="ribbon-zone" id="rz">
+    <svg class="ribbon" id="ribbon" preserveAspectRatio="none" aria-hidden="true"><path id="ribbonPath"/></svg>
+
+    <!-- About -->
+    <section class="about wrap" id="about">
+      <h2 class="big"><span class="ln"><span>Silent Power,</span></span><span class="ln"><span>Ridden Every Day</span></span></h2>
+      <div class="about-grid">
+        <div class="duo rv" id="duo"></div>
+        <div class="rv">
+          <p>Master.EV is where you meet your next scooter in person. Sit on every model, compare battery and range options side by side, and take your favourite out for a free test ride. Our team helps with colours, finance and paperwork, so you ride home the same day.</p>
+          <a href="#visit" class="pill white" data-scroll><span class="dot"></span> Visit the showroom</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test ride -->
+    <section class="ride wrap">
+      <a href="#visit" class="ride-card" id="rideCard" data-scroll aria-label="Book a free test ride">
+        <div class="ride-track" id="rideTrack"></div>
+        <div class="ride-word"><span>Test</span><span class="ride-btn"><svg viewBox="0 0 40 56" aria-hidden="true"><path d="M26 0 L4 32 H18 L12 56 L36 22 H22 Z" fill="#0b0b0b"/></svg></span><span>Ride</span></div>
+      </a>
+      <div class="plusrow" aria-hidden="true"><i>+</i><i>+</i><i>+</i><i>+</i><i>+</i></div>
+    </section>
+  </div>
+
+  <!-- Collection -->
+  <section class="collection wrap" id="collection">
+    <div class="head">
+      <h2 class="big"><span class="ln"><span>The Collection</span></span></h2>
+      <p class="caps">Every Zelio electric scooter, under one roof. Tap a model for price, range and colours.</p>
+    </div>
+    <div class="filters">
+      <button class="pill light on" data-f="all">All 19</button>
+      <button class="pill light" data-f="a">Under &#8377;60k</button>
+      <button class="pill light" data-f="b">&#8377;60k to &#8377;70k</button>
+      <button class="pill light" data-f="c">Above &#8377;70k</button>
+      <select class="sort" id="sort" aria-label="Sort scooters">
+        <option value="feat">Featured</option>
+        <option value="lo">Price: low to high</option>
+        <option value="hi">Price: high to low</option>
+        <option value="rng">Longest range</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="note">Prices are ex-showroom as listed by Zelio and may change. Range depends on the battery option chosen and riding conditions. Ask in the showroom for the on-road price.</p>
+  </section>
+
+  <!-- Savings -->
+  <section class="savings wrap" id="savings">
+    <div class="head">
+      <h2 class="big"><span class="ln"><span>What You Keep</span></span></h2>
+      <p class="caps">Move the sliders to match your daily ride. Every number is yours to change.</p>
+    </div>
+    <div class="calc rv">
+      <div>
+        <label for="km">Daily ride <output id="oKm"></output></label><input type="range" id="km" min="5" max="120" value="30">
+        <label for="pet">Petrol price <output id="oPet"></output></label><input type="range" id="pet" min="80" max="130" value="105">
+        <label for="mil">Petrol scooter mileage <output id="oMil"></output></label><input type="range" id="mil" min="25" max="70" value="45">
+        <label for="el">Electricity rate <output id="oEl"></output></label><input type="range" id="el" min="3" max="15" value="8">
+        <label for="use">EV usage <output id="oUse"></output></label><input type="range" id="use" min="1" max="6" step="0.5" value="3">
+      </div>
+      <div class="save">
+        <span class="caps">You save every year</span>
+        <div class="num" id="saveOut">&#8377;0</div>
+        <small id="saveSub"></small>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statement -->
+  <section class="statement-big wrap">
+    <h2 class="big" id="stmt">Step on. Switch on. Ride electric.</h2>
+    <div class="cta">
+      <p>Is your next ride electric?</p>
+      <a href="#visit" class="pill dark" data-scroll>Book a free test ride <span class="dot"></span></a>
+    </div>
+  </section>
+
+  <!-- Visit -->
+  <section class="visit wrap" id="visit">
+    <div class="head">
+      <h2 class="big"><span class="ln"><span>Come Ride</span></span></h2>
+      <p class="caps">Walk in any day. The test ride is free and takes about fifteen minutes.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="info rv">
+        <div><span class="caps">Owner</span><p>Mohammad Sadee</p></div>
+        <div><span class="caps">Showroom</span><p id="cAddr"></p></div>
+        <div><span class="caps">Call or WhatsApp</span><p id="cPhone"></p></div>
+        <div><span class="caps">Open</span><p id="cHours"></p></div>
+        <div class="map-wrap">
+          <iframe id="map" title="Map showing the Master.EV showroom in Barasat" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <a class="pill dark" id="dirBtn" target="_blank" rel="noopener">Get directions <span class="dot"></span></a>
+        </div>
+      </div>
+      <form class="book rv" id="book">
+        <div class="field"><label for="fName">Your name</label><input id="fName" required autocomplete="name"></div>
+        <div class="field"><label for="fPhone">Phone</label><input id="fPhone" type="tel" required autocomplete="tel" inputmode="tel"></div>
+        <div class="field"><label for="fModel">Scooter</label><select id="fModel"></select></div>
+        <div class="field"><label for="fDate">Preferred day</label><input id="fDate" type="date"></div>
+        <button class="pill dark" type="submit">Send on WhatsApp <span class="dot"></span></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-logo" aria-label="Master.EV">Master<b>.</b>EV</div>
+  <div class="foot-row">
+    <span>&copy; <span id="yr"></span> Master.EV. All rights reserved.</span>
+    <span>Zelio is a trademark of its owner. Prices and specifications may change without notice.</span>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+  <div class="panel">
+    <button class="x" id="mx" aria-label="Close">&times;</button>
+    <div class="pic"><img id="mImg" alt=""></div>
+    <div class="body">
+      <span class="caps" id="mBand"></span>
+      <h3 id="mName"></h3>
+      <div class="specs">
+        <div><span class="caps">Ex-showroom</span><b id="mPrice"></b></div>
+        <div><span class="caps">Range / charge</span><b id="mRange"></b></div>
+        <div><span class="caps">Colours</span><b id="mCol"></b></div>
+        <div><span class="caps">Brand</span><b>Zelio</b></div>
+      </div>
+      <a href="#visit" class="pill dark" id="mBook" data-scroll>Book a test ride <span class="dot"></span></a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+/* ===== Showroom details: EDIT THESE ===== */
+const SHOP = {
+  address: "Golabari-Boalghata Rd, Mitpukuria, Barasat, West Bengal 743423",
+  mapQuery: "Master Ev, Golabari-Boalghata Rd, Barasat, Mitpukuria, West Bengal 743423",
+  phone: "+91 96473 21464",          // shown on the page
+  whatsapp: "919647321464",          // digits only, with country code
+  hours: "Monday to Sunday, 10 am to 8 pm"
+};
+
+const MODELS = [
+  {id:"mystery",n:"Mystery",p:88234,r:[100],c:4},
+  {id:"xmen2",n:"X Men 2.0",p:79034,r:[70,100,120],c:4},
+  {id:"gracy-pro",n:"Gracy Pro",p:78459,r:[60,90],c:4},
+  {id:"legender",n:"Legender",p:71559,r:[100,120],c:3},
+  {id:"eeva-zx-plus",n:"EEVA ZX+",p:71559,r:[60,90],c:4},
+  {id:"logix-loader",n:"Logix Loader",p:70409,r:[100,120],c:1},
+  {id:"xmen-plus",n:"X Men+",p:70409,r:[70,100,120],c:6},
+  {id:"eeva-zx",n:"EEVA ZX",p:70409,r:[60,90],c:5},
+  {id:"gracy",n:"Gracy",p:68109,r:[70,100,120],c:1},
+  {id:"legender-plus-premium",n:"Legender+ Premium",p:68134,r:[60,90],c:6},
+  {id:"legender-plus",n:"Legender+",p:65259,r:[60,90],c:7},
+  {id:"logix",n:"LOGIX",p:65234,r:[60,90],c:4},
+  {id:"gracy-plus",n:"Gracy+",p:63534,r:[],c:4},
+  {id:"gracyi",n:"Gracyi",p:62384,r:[60,90],c:5},
+  {id:"eeva-n",n:"EEVA (N)",p:60059,r:[60,90],c:4},
+  {id:"eeva-eco",n:"Eeva Eco",p:56034,r:[60,90],c:5},
+  {id:"little-gracy",n:"Little Gracy",p:54883,r:[],c:3},
+  {id:"eeva-eco-zx",n:"Eeva Eco ZX",p:54308,r:[60,90],c:5},
+  {id:"eeva-eco-lx",n:"Eeva Eco LX",p:52008,r:[60,90],c:4}
+];
+
+const rupee = n => "₹" + n.toLocaleString("en-IN");
+const band = p => p < 60000 ? "a" : p <= 70000 ? "b" : "c";
+const bandName = {a:"Under ₹60k",b:"₹60k to ₹70k",c:"Above ₹70k"};
+const rangeTxt = m => m.r.length ? m.r.join(" / ") + " km" : "Ask in showroom";
+const byId = id => MODELS.find(m => m.id === id);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = id => document.getElementById(id);
+
+/* Showroom details */
+$("cAddr").textContent = SHOP.address; $("mAddr").textContent = SHOP.address;
+$("cPhone").innerHTML = `<a href="tel:${SHOP.phone.replace(/\s/g,"")}">${SHOP.phone}</a>`;
+$("mPhone").textContent = SHOP.phone;
+$("cHours").textContent = SHOP.hours;
+$("map").src = "https://www.google.com/maps?q=" + encodeURIComponent(SHOP.mapQuery) + "&z=16&output=embed";
+$("dirBtn").href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(SHOP.mapQuery);
+$("yr").textContent = new Date().getFullYear();
+
+/* About duotone slideshow */
+const duoIds = ["mystery","gracy-pro","xmen2","legender-plus-premium","eeva-zx-plus"];
+$("duo").innerHTML = duoIds.map((id,i) => `<img src="img/${id}.webp" alt="Zelio ${byId(id).n}" class="${i?"":"on"}">`).join("");
+let di = 0;
+setInterval(() => { const im = $("duo").querySelectorAll("img"); im[di].classList.remove("on"); di = (di+1) % im.length; im[di].classList.add("on"); }, 2600);
+
+/* Test ride track */
+const trackIds = ["xmen-plus","gracy","legender","eeva-zx","mystery","gracyi","logix","eeva-eco-zx","little-gracy"];
+$("rideTrack").innerHTML = [...trackIds,...trackIds].map(id => `<img src="img/${id}.webp" alt="" loading="lazy">`).join("");
+
+/* Statement words */
+$("stmt").innerHTML = $("stmt").textContent.split(" ").map(w => `<span class="w">${w}</span>`).join(" ");
+
+/* Collection */
+let filter = "all", sortBy = "feat";
+function render(){
+  let list = MODELS.filter(m => filter === "all" || band(m.p) === filter);
+  if (sortBy === "lo") list = [...list].sort((a,b) => a.p - b.p);
+  if (sortBy === "hi") list = [...list].sort((a,b) => b.p - a.p);
+  if (sortBy === "rng") list = [...list].sort((a,b) => Math.max(0,...b.r) - Math.max(0,...a.r));
+  $("grid").innerHTML = list.map(m => `
+    <button class="card" data-open="${m.id}">
+      <div class="media"><img src="img/${m.id}.webp" alt="Zelio ${m.n}" loading="lazy"></div>
+      <div class="tags caps">${rupee(m.p)} &bull; ${m.r.length ? "Up to " + Math.max(...m.r) + " km" : "Range: ask us"} &bull; ${m.c} colour${m.c>1?"s":""}</div>
+      <h3>${m.n}</h3>
+    </button>`).join("");
+  if (window.gsap && !reduce) gsap.from("#grid .card",{y:60,opacity:0,duration:.9,stagger:.05,ease:"power3.out",clearProps:"transform,opacity"});
+  if (window.ScrollTrigger) ScrollTrigger.refresh();
+}
+document.querySelectorAll(".filters [data-f]").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".filters [data-f]").forEach(x => x.classList.remove("on"));
+  b.classList.add("on"); filter = b.dataset.f; render();
+});
+$("sort").onchange = e => { sortBy = e.target.value; render(); };
+
+/* Modal */
+const modal = $("modal");
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-open]"); if (!t) return;
+  const m = byId(t.dataset.open);
+  $("mImg").src = `img/${m.id}.webp`; $("mImg").alt = "Zelio " + m.n;
+  $("mName").textContent = m.n; $("mBand").textContent = bandName[band(m.p)];
+  $("mPrice").textContent = rupee(m.p); $("mRange").textContent = rangeTxt(m);
+  $("mCol").textContent = m.c + (m.c > 1 ? " options" : " option");
+  $("mBook").onclick = () => { closeModal(); $("fModel").value = m.n; };
+  modal.classList.add("open"); lenis && lenis.stop();
+});
+function closeModal(){ modal.classList.remove("open"); lenis && lenis.start(); }
+$("mx").onclick = closeModal;
+modal.onclick = e => { if (e.target === modal) closeModal(); };
+document.addEventListener("keydown", e => { if (e.key === "Escape"){ closeModal(); setMenu(false); } });
+
+/* Menu */
+function setMenu(open){
+  document.body.classList.toggle("menu-open", open);
+  $("menuBtn").setAttribute("aria-expanded", open);
+  if (lenis) open ? lenis.stop() : lenis.start();
+}
+$("menuBtn").onclick = () => setMenu(true);
+$("menuClose").onclick = () => setMenu(false);
+$("veil").onclick = () => setMenu(false);
+
+/* Booking -> WhatsApp */
+$("fModel").innerHTML = MODELS.map(m => `<option>${m.n}</option>`).join("");
+$("book").onsubmit = e => {
+  e.preventDefault();
+  const v = id => $(id).value.trim();
+  const msg = `Hello Master.EV, I would like to book a test ride.\nName: ${v("fName")}\nPhone: ${v("fPhone")}\nScooter: ${v("fModel")}\nPreferred day: ${v("fDate") || "Any"}`;
+  window.open(`https://wa.me/${SHOP.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+};
+
+/* Savings calculator */
+const ids = ["km","pet","mil","el","use"];
+function calc(){
+  const [km,pet,mil,el,use] = ids.map(i => +$(i).value);
+  $("oKm").textContent = km + " km"; $("oPet").textContent = "₹" + pet + " / litre";
+  $("oMil").textContent = mil + " km / litre"; $("oEl").textContent = "₹" + el + " / unit";
+  $("oUse").textContent = use + " units / 100 km";
+  const yearKm = km * 365, petrol = yearKm / mil * pet, ev = yearKm / 100 * use * el;
+  const save = Math.max(0, Math.round(petrol - ev)), out = $("saveOut");
+  const from = +(out.dataset.v || 0); out.dataset.v = save;
+  if (window.gsap && !reduce){ const o = {v:from}; gsap.to(o,{v:save,duration:.6,ease:"power2.out",onUpdate:() => out.textContent = rupee(Math.round(o.v))}); }
+  else out.textContent = rupee(save);
+  $("saveSub").textContent = `Petrol about ${rupee(Math.round(petrol))} a year vs electricity about ${rupee(Math.round(ev))}, for ${yearKm.toLocaleString("en-IN")} km. An estimate from your inputs, not a guarantee.`;
+}
+ids.forEach(i => $(i).oninput = calc);
+
+/* Ribbon path: a long winding line drawn through the about + test-ride area */
+function buildRibbon(){
+  const z = $("rz"), w = z.offsetWidth, h = z.offsetHeight, svg = $("ribbon");
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+  const d = `M ${-60} ${h*.02}
+    C ${w*.25} ${h*.0}, ${w*.42} ${h*.12}, ${w*.32} ${h*.24}
+    S ${w*-.05} ${h*.36}, ${w*.12} ${h*.44}
+    S ${w*.62} ${h*.38}, ${w*.74} ${h*.48}
+    S ${w*1.02} ${h*.62}, ${w*.86} ${h*.7}
+    S ${w*.3} ${h*.78}, ${w*.5} ${h*.9}
+    S ${w*1.1} ${h*.98}, ${w+80} ${h*.96}`;
+  $("ribbonPath").setAttribute("d", d.replace(/\s+/g," "));
+  const len = $("ribbonPath").getTotalLength();
+  $("ribbonPath").style.strokeDasharray = len;
+  $("ribbonPath").style.strokeDashoffset = reduce ? 0 : len;
+  return len;
+}
+
+/* ===== Video hero: official Zelio videos (YouTube embeds), Lamborghini-style ===== */
+const SLIDES = [
+  {yt:"vJUgXqbsfcE", id:"mystery",   eye:"Zelio · High-speed electric", sub:"The boldest scooter in the showroom. Up to 100 km on a single charge."},
+  {yt:"0ZOGGBPHUf0", id:"gracy-pro", eye:"Zelio · Everyday elegance",   sub:"A refined everyday ride with 60 and 90 km range options."}
+];
+const SLIDE_SECONDS = 14;
+let si = -1, bar = null, paused = reduce, heroLive = false;
+const vid = $("vid");
+$("tabs").innerHTML = SLIDES.map((sl,i) => `<button class="tab" role="tab" data-i="${i}"><i></i><b>0${i+1}</b>${byId(sl.id).n}</button>`).join("");
+$("tabs").onclick = e => { const t = e.target.closest(".tab"); if (t) show(+t.dataset.i); };
+
+function ytCmd(func){
+  const f = vid.querySelector("iframe.cur");
+  if (f && f.contentWindow) f.contentWindow.postMessage(JSON.stringify({event:"command", func, args:[]}), "*");
+}
+function show(i){
+  if (i === si) return;
+  si = i;
+  const sl = SLIDES[i], m = byId(sl.id);
+  vid.style.backgroundImage = `url(https://i.ytimg.com/vi/${sl.yt}/maxresdefault.jpg)`;
+  if (!paused){
+    const old = [...vid.querySelectorAll("iframe")];
+    const f = document.createElement("iframe");
+    f.src = `https://www.youtube-nocookie.com/embed/${sl.yt}?autoplay=1&mute=1&loop=1&playlist=${sl.yt}&controls=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&enablejsapi=1`;
+    f.title = `Zelio ${m.n} video`;
+    f.allow = "autoplay; encrypted-media; picture-in-picture";
+    f.tabIndex = -1; f.setAttribute("aria-hidden", "true");
+    old.forEach(o => o.classList.remove("cur")); f.classList.add("cur");
+    f.onload = () => setTimeout(() => { f.classList.add("on"); old.forEach(o => { o.classList.remove("on"); setTimeout(() => o.remove(), 1300); }); }, 700);
+    vid.appendChild(f);
+  }
+  $("hEye").textContent = sl.eye;
+  $("hName").textContent = m.n;
+  $("hSub").textContent = `${sl.sub} From ${rupee(m.p)} ex-showroom.`;
+  $("hMore").dataset.open = m.id;
+  document.querySelectorAll(".tab").forEach((t,k) => { t.classList.toggle("on", k === i); t.setAttribute("aria-selected", k === i); gsap.set(t.querySelector("i"), {scaleX:0}); });
+  if (heroLive && !reduce) gsap.from(".hero-name span, .hero-sub", {yPercent:60, opacity:0, duration:.9, stagger:.08, ease:"power4.out"});
+  if (bar) bar.kill();
+  bar = gsap.to(`.tab[data-i="${i}"] i`, {scaleX:1, duration:SLIDE_SECONDS, ease:"none", paused:!heroLive || paused, onComplete:() => show((si + 1) % SLIDES.length)});
+}
+$("pp").onclick = () => {
+  paused = !paused;
+  $("pp").textContent = paused ? "Play" : "Pause";
+  $("pp").setAttribute("aria-label", paused ? "Play video" : "Pause video");
+  if (paused){ ytCmd("pauseVideo"); bar && bar.pause(); }
+  else {
+    if (!vid.querySelector("iframe")){ const k = si; si = -1; show(k); }
+    else ytCmd("playVideo");
+    bar && bar.play();
+  }
+};
+if (reduce){ $("pp").textContent = "Play"; $("pp").setAttribute("aria-label", "Play video"); }
+
+/* ===== Smooth scroll + scroll animations ===== */
+let lenis = null;
+document.addEventListener("click", e => {
+  const a = e.target.closest("a[data-scroll]"); if (!a) return;
+  const target = document.querySelector(a.getAttribute("href")); if (!target) return;
+  e.preventDefault(); setMenu(false);
+  lenis ? lenis.scrollTo(target, {offset:-20, duration:1.4}) : target.scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+});
+
+function scrollAnims(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* hero stage eases back as you leave it */
+
+  /* big headline lines slide up */
+  gsap.utils.toArray(".big .ln>span").forEach(el => gsap.from(el,{yPercent:105,duration:1.2,ease:"power4.out",scrollTrigger:{trigger:el,start:"top 92%"}}));
+  gsap.utils.toArray(".rv").forEach(el => gsap.to(el,{opacity:1,y:0,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%"}}));
+
+  /* ribbon draws itself with scroll */
+  const len = buildRibbon();
+  gsap.fromTo("#ribbonPath",{strokeDashoffset:len},{strokeDashoffset:0,ease:"none",scrollTrigger:{trigger:"#rz",start:"top 75%",end:"bottom 60%",scrub:1}});
+
+  /* test ride card bends flat as it arrives */
+  gsap.fromTo("#rideCard",{rotateX:32,scale:.82,y:60},{rotateX:0,scale:1,y:0,ease:"none",scrollTrigger:{trigger:".ride",start:"top bottom",end:"top 15%",scrub:true}});
+  gsap.to("#rideTrack",{xPercent:-50,ease:"none",duration:40,repeat:-1});
+
+  /* cards lean with scroll speed */
+  const skew = gsap.quickTo("#grid", "skewY", {duration:.5, ease:"power3"});
+  ScrollTrigger.create({trigger:"#collection",start:"top bottom",end:"bottom top",onUpdate:s => skew(gsap.utils.clamp(-3,3,s.getVelocity()/-400))});
+  ScrollTrigger.addEventListener("scrollEnd", () => skew(0));
+
+  /* statement words light up one by one */
+  gsap.to("#stmt .w",{opacity:1,stagger:.3,ease:"none",scrollTrigger:{trigger:"#stmt",start:"top 80%",end:"bottom 45%",scrub:true}});
+
+  /* footer logo rises */
+  gsap.from(".foot-logo",{yPercent:40,opacity:0,ease:"power2.out",scrollTrigger:{trigger:".foot-logo",start:"top 98%",end:"top 60%",scrub:true}});
+
+  addEventListener("resize", () => { buildRibbon(); ScrollTrigger.refresh(); });
+}
+
+function startSite(){
+  document.body.classList.remove("locked");
+  const hdr = $("hdr");
+  const onScroll = () => { hdr.classList.toggle("scrolled", scrollY > 60); hdr.classList.toggle("over", scrollY < $("stage").offsetHeight - 70); };
+  addEventListener("scroll", onScroll, {passive:true}); onScroll();
+  if (!reduce && window.Lenis){
+    lenis = new Lenis({lerp:.09, smoothWheel:true});
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t*1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  scrollAnims();
+  ScrollTrigger.refresh();
+}
+
+function heroEntrance(){
+  gsap.from("#stage",{opacity:0,duration:1.2,ease:"power2.out"});
+  gsap.from("header > *",{y:-30,opacity:0,duration:1,stagger:.1,ease:"power3.out",delay:.2});
+  gsap.from(".hero-copy > *, .tabs, .pp, .hero .plusrow",{y:24,opacity:0,duration:1,stagger:.1,ease:"power3.out",delay:.5});
+  heroLive = true; if (bar && !paused) bar.play();
+}
+
+/* Intro: battery charges, letters rise, curtains split (unchanged) */
+function intro(){
+  const pct = $("pct"), o = {v:0};
+  gsap.timeline({onComplete:() => { $("intro").remove(); startSite(); }})
+    .to("#intro .mark .m",{strokeDashoffset:0,duration:.9,ease:"power2.inOut"})
+    .to("#intro .mark .b",{opacity:1,duration:.08,repeat:3,yoyo:true})
+    .set("#intro .mark .b",{opacity:1})
+    .to("#intro .word span",{y:0,duration:.9,stagger:.06,ease:"power4.out"},"-=.2")
+    .to("#intro .battery i",{width:"100%",duration:1.6,ease:"power2.inOut"},"-=.4")
+    .to(o,{v:100,duration:1.6,ease:"power2.inOut",onUpdate:() => pct.textContent = Math.round(o.v)},"<")
+    .to("#intro .bolt",{opacity:1,duration:.12,yoyo:true,repeat:3})
+    .to("#intro .logo",{scale:1.08,opacity:0,duration:.5,ease:"power2.in"})
+    .to("#intro .curtain.top",{yPercent:-100,duration:1,ease:"expo.inOut"},"-=.1")
+    .to("#intro .curtain.bot",{yPercent:100,duration:1,ease:"expo.inOut"},"<")
+    .set("#intro",{background:"transparent"},"<")
+    .add(heroEntrance,"-=.6");
+}
+
+gsap.registerPlugin(ScrollTrigger);
+render(); calc();
+show(0);
+
+if (reduce){
+  $("intro").remove(); document.body.classList.remove("locked");
+  buildRibbon(); heroLive = true;
+} else intro();
+</script>
+</body>
+</html>
